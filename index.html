@@ -1,28 +1,37 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" class="static">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>El museo de los otros</title>
+<script>if(!matchMedia('(prefers-reduced-motion:reduce)').matches)document.documentElement.classList.remove('static')</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-:root{--gold:#d4af37;--gold-l:#f3dc8a;--gold-d:#8a6d1a;--white:#f5f1e6;--bg:#000}
+:root{--gold:#d4af37;--gold-l:#f3dc8a;--gold-d:#8a6d1a;--white:#f5f1e6;--bg:#000;--m:1}
+.static{--m:0} /* --m: 1 = museo (gris, marco, pedestal) · 0 = territorio (color, libre) */
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
+html.lock{overflow:hidden}
 body{background:var(--bg);color:var(--white);font-family:'Montserrat',sans-serif;font-weight:300;line-height:1.8;overflow-x:hidden;counter-reset:img}
 ::selection{background:var(--gold);color:#000}
 
-/* barra de progreso + brillo del cursor */
+/* barra de progreso, luz del cursor, flash y noche */
 #bar{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--gold-d),var(--gold-l));z-index:50}
 #glow{position:fixed;inset:0;pointer-events:none;z-index:1;background:radial-gradient(500px circle at var(--x,50%) var(--y,30%),rgba(212,175,55,.09),transparent 60%)}
+#flash{position:fixed;inset:0;z-index:90;background:#fff8e6;opacity:0;pointer-events:none}
+#flash.go{animation:flash .6s ease-out}
+@keyframes flash{0%{opacity:0}7%{opacity:var(--fa,.6)}100%{opacity:0}}
+#night{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;background:linear-gradient(#000 0%,#050a20 55%,#0d1838 100%)}
+#night canvas{display:block;width:100%;height:100%}
 nav{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;gap:14px}
 nav a{width:8px;height:8px;border-radius:50%;border:1px solid var(--gold);display:block;transition:.3s}
 nav a.on,nav a:hover{background:var(--gold);transform:scale(1.5)}
 @media(max-width:700px){nav{display:none}}
 
-/* cabecera: logo a la izquierda, título del proyecto a la derecha */
-header{position:fixed;top:0;left:0;right:0;z-index:45;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:18px 5vw 30px;background:linear-gradient(#000 40%,transparent)}
+/* cabecera: logo a la izquierda, título del proyecto a la derecha; se oculta al bajar */
+header{position:fixed;top:0;left:0;right:0;z-index:45;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:18px 5vw 30px;background:linear-gradient(#000 40%,transparent);transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+header.hide{transform:translateY(-110%)}
 .logo{display:block;width:clamp(140px,18vw,220px)}
 .logo img{display:block;width:100%;height:auto;mix-blend-mode:screen}
 .proj{font-family:'Cormorant Garamond',serif;font-size:clamp(.85rem,1.6vw,1.15rem);letter-spacing:.18em;text-transform:uppercase;text-align:right;line-height:1.3;text-wrap:balance}
@@ -32,28 +41,38 @@ section{position:relative;z-index:2;padding:14vh 6vw;max-width:1200px;margin:0 a
 h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.1}
 h1{font-size:clamp(3rem,10vw,8rem);letter-spacing:.04em}
 h2{font-size:clamp(2rem,5.5vw,4rem);margin-bottom:.6em}
+h2::after{content:"";display:block;height:1px;width:0;margin-top:.3em;background:linear-gradient(90deg,var(--gold),transparent);transition:width 1.6s .4s cubic-bezier(.2,.7,.2,1)}
+h2.in::after,.static h2::after{width:min(240px,45%)}
 h3{font-size:1.6rem;color:var(--gold-l);margin-bottom:.3em}
 .gold{background:linear-gradient(110deg,var(--gold-d) 10%,var(--gold-l) 40%,var(--gold) 55%,var(--gold-d) 90%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}
 @keyframes shine{to{background-position:-250% 0}}
 .eyebrow{font-size:.75rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:1.6em}
-.line{width:1px;height:70px;background:linear-gradient(var(--gold),transparent);margin:2.5rem auto 0;animation:drop 2s ease-in-out infinite}
+.line{width:1px;height:70px;background:linear-gradient(var(--gold),transparent);margin:1.2rem auto 0;animation:drop 2s ease-in-out infinite}
 @keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 p{margin-bottom:1.4em;font-size:1.05rem;max-width:62ch}
-p b,.w{color:var(--gold-l);font-weight:600}
+p b{color:var(--gold-l);font-weight:600}
 .big{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,4vw,2.8rem);line-height:1.3;max-width:24ch;margin:0 auto;text-align:center}
-.center{text-align:center}.center p{margin-inline:auto}
 hr{border:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto;max-width:600px;position:relative;z-index:2}
 
-/* placeholders de imagen numerados */
+/* portada: foco de museo, polvo dorado y parallax */
+#inicio::before{content:"";position:absolute;top:0;left:50%;width:min(1000px,150vw);height:100%;transform:translateX(-50%);clip-path:polygon(44% 0,56% 0,100% 100%,0 100%);background:linear-gradient(rgba(255,240,205,.11),rgba(255,240,205,0) 80%);z-index:-1;pointer-events:none}
+#inicio{overflow-x:clip}
+#dust{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+.hc{display:flex;flex-direction:column;align-items:center}
+.hint{font-size:.65rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold-d);margin-top:3rem}
+
+/* placeholders de imagen numerados (el estado --m aplica a las fotos reales también) */
 .ph{position:relative;overflow:hidden;aspect-ratio:16/9;margin:2.5rem 0;border:1px solid rgba(212,175,55,.45);display:flex;align-items:center;justify-content:center;flex-direction:column;
- background:repeating-linear-gradient(45deg,#0c0c0c 0 14px,#111 14px 28px);color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:.2em;text-align:center}
+ background:repeating-linear-gradient(45deg,#0c0c0c 0 14px,#111 14px 28px) 0 var(--py,0)/auto;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:.2em;text-align:center;
+ box-shadow:0 0 0 calc(var(--m)*7px) #ece8de}
 .ph::before{counter-increment:img;content:"IMAGEN " counter(img,decimal-leading-zero)}
+.ph>img,.ph>small,.ph::before{filter:grayscale(var(--m))}
 .ph small{font:300 .7rem 'Montserrat';letter-spacing:.3em;text-transform:uppercase;color:var(--white);opacity:.6;margin-top:.6rem;padding:0 1rem}
-.ph::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 40%,rgba(243,220,138,.12) 50%,transparent 60%);transform:translateX(-100%);transition:transform 1.2s}
-.ph:hover::after{transform:translateX(100%)}
-.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.tall{aspect-ratio:3/4}.wide{aspect-ratio:21/9}
-.ph.par{will-change:transform}
+.ph::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),rgba(255,236,170,.26),transparent 70%);opacity:0;transition:opacity .4s}
+.ph:hover::after{opacity:1}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:translateY(var(--py,0)) scale(1.12)}
+.tall{aspect-ratio:3/4;margin-bottom:3.2rem;box-shadow:0 0 0 calc(var(--m)*7px) #ece8de,0 calc(var(--m)*34px) 0 calc(var(--m)*-5px) #ece8de} /* el pedestal */
+.wide{aspect-ratio:21/9}
 
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2rem;margin-top:3rem}
 .card{border-top:1px solid var(--gold);padding-top:1rem}
@@ -62,19 +81,113 @@ hr{border:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),
 .num{font-family:'Cormorant Garamond';color:var(--gold);font-size:.9rem;letter-spacing:.3em}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
 @media(max-width:800px){.split{grid-template-columns:1fr;gap:1rem}}
-.ev{display:flex;flex-direction:column;gap:.1em;margin:2rem 0}
-.ev span{font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,3.5vw,2.2rem);color:var(--gold-l)}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin:4rem 0 1rem;text-align:center}
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stats b{display:block;font:500 clamp(2.6rem,7vw,4.5rem)/1 'Cormorant Garamond',serif}
+.stats span{font-size:.7rem;letter-spacing:.35em;text-transform:uppercase;opacity:.7}
+
+/* visor y flash de cámara */
+.cam{cursor:crosshair}
+.vf{position:absolute;inset:0;pointer-events:none}
+.vf i{position:absolute;width:22px;height:22px;border:0 solid rgba(245,241,230,.85)}
+.vf i:nth-child(1){top:14px;left:14px;border-width:2px 0 0 2px}
+.vf i:nth-child(2){top:14px;right:14px;border-width:2px 2px 0 0}
+.vf i:nth-child(3){bottom:14px;left:14px;border-width:0 0 2px 2px}
+.vf i:nth-child(4){bottom:14px;right:14px;border-width:0 2px 2px 0}
+.vf em,.vf u{position:absolute;font:600 .62rem 'Montserrat';font-style:normal;text-decoration:none;letter-spacing:.25em;color:rgba(245,241,230,.85)}
+.vf em{top:18px;right:48px}
+.vf em::before{content:"";display:inline-block;width:7px;height:7px;margin-right:.6em;border-radius:50%;background:#ff4d4d;animation:blk 1s steps(2) infinite}
+@keyframes blk{50%{opacity:0}}
+.vf u{bottom:20px;left:48px}
+.fx{position:absolute;left:50%;top:50%;width:56px;height:42px;margin:-21px 0 0 -28px;border:1px solid var(--gold);opacity:0}
+.cam.lock .fx{animation:focus 1s forwards}
+@keyframes focus{0%{opacity:0;transform:scale(2.4)}35%{opacity:1}75%{transform:scale(1);border-color:#fff}100%{opacity:.9;transform:scale(1);border-color:var(--gold)}}
+.fl{position:absolute;inset:0;background:#fff8e6;opacity:0}
+.cam.shot .fl{animation:flash .55s ease-out}
+
+/* texto cinético: las frases cortas se encienden una a una al hacer scroll */
+.kin{height:calc(100vh + var(--n,5)*var(--s,28)*1vh);margin:2rem 0}
+.kin-in{position:sticky;top:0;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:.15em}
+.kl{position:relative;display:inline-block;font:500 clamp(1.7rem,6.2vw,4.4rem)/1.2 'Cormorant Garamond',serif;color:var(--white);opacity:.14;transform:translateY(14px) scale(.96);filter:blur(1.5px);transition:opacity .7s,transform .7s cubic-bezier(.2,.7,.2,1),filter .7s,color .7s}
+.kl.past{opacity:.4;transform:none;filter:none}
+.kl.act{opacity:1;transform:none;filter:none;color:var(--gold-l)}
+.kin.mv .kl{transform:translateX(-70px)}
+.kin.mv .kl:nth-child(even){transform:translateX(70px)}
+.kin.mv .kl.act,.kin.mv .kl.past{transform:none}
+.kin.cam .kl::before{content:"";position:absolute;inset:-.18em -.5em;opacity:0;transition:opacity .5s;background:
+ linear-gradient(var(--gold),var(--gold)) 0 0/14px 1px no-repeat,linear-gradient(var(--gold),var(--gold)) 0 0/1px 14px no-repeat,
+ linear-gradient(var(--gold),var(--gold)) 100% 0/14px 1px no-repeat,linear-gradient(var(--gold),var(--gold)) 100% 0/1px 14px no-repeat,
+ linear-gradient(var(--gold),var(--gold)) 0 100%/14px 1px no-repeat,linear-gradient(var(--gold),var(--gold)) 0 100%/1px 14px no-repeat,
+ linear-gradient(var(--gold),var(--gold)) 100% 100%/14px 1px no-repeat,linear-gradient(var(--gold),var(--gold)) 100% 100%/1px 14px no-repeat}
+.kin.cam .kl.act::before{opacity:1}
+
+/* pasillo del museo: scroll vertical → recorrido horizontal */
+.hall{position:relative;z-index:2;height:400vh}
+.hall-in{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;align-items:center}
+.track{position:relative;display:flex;align-items:flex-start;gap:clamp(1.5rem,5vw,5rem);will-change:transform}
+.fig{--fw:max(190px,min(78vw,380px,calc((100svh - 380px)*.75)));--lit:1;position:relative;flex:0 0 var(--fw);width:var(--fw);opacity:calc(.3 + .7*var(--lit));transform:scale(calc(.9 + .1*var(--lit)))}
+.fig::before{content:"";position:absolute;left:50%;top:-60vh;width:170%;height:calc(60vh + 80%);transform:translateX(-50%);clip-path:polygon(42% 0,58% 0,100% 100%,0 100%);background:linear-gradient(rgba(255,240,205,.24),rgba(255,240,205,0) 90%);opacity:calc(var(--lit)*var(--lit));pointer-events:none;z-index:2}
+.fig .ph{margin:0 0 3.2rem}
+.fig h3{font-size:1.45rem}
+.fig p{font-size:.88rem;line-height:1.6;margin-bottom:0}
+.hui{position:absolute;left:6vw;right:6vw;bottom:3.5vh;display:flex;align-items:center;gap:1.2rem;z-index:3;font:500 .95rem 'Cormorant Garamond',serif;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+.hh{opacity:calc(1 - var(--hp,0)*30);white-space:nowrap}
+.hbar{flex:1;height:1px;background:rgba(212,175,55,.25);position:relative}
+.hbar b{position:absolute;inset:0;background:var(--gold);transform:scaleX(var(--hp,0));transform-origin:left}
+
+/* el ojo que observa */
+.eye{display:block;width:min(86vw,560px);margin:3rem auto}
+.eye svg{display:block;width:100%;height:auto;overflow:visible}
+#eyeg{transform-box:fill-box;transform-origin:center}
+#eyeg.blink{animation:blink .22s}
+@keyframes blink{50%{transform:scaleY(.06)}}
+#pup{transition:transform .35s cubic-bezier(.2,.7,.2,1)}
 
 /* revelado al hacer scroll */
 .rv{opacity:0;transform:translateY(40px);filter:blur(6px);transition:opacity 1.1s,transform 1.1s cubic-bezier(.2,.7,.2,1),filter 1.1s}
 .rv.in{opacity:1;transform:none;filter:none}
 .d1{transition-delay:.15s}.d2{transition-delay:.3s}.d3{transition-delay:.45s}
 footer{position:relative;z-index:2;text-align:center;padding:12vh 6vw 8vh}
-@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;filter:none;transition:none}.gold,.line{animation:none}html{scroll-behavior:auto}}
+
+/* intro: se enciende un foco y se abren las puertas del museo */
+#intro{position:fixed;inset:0;z-index:100;display:grid;place-items:center;cursor:pointer;overflow:hidden}
+#intro .bloom{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(243,220,138,.4),transparent 62%);opacity:0}
+#intro.open .bloom{animation:bloom 1.6s forwards}
+@keyframes bloom{0%{opacity:0}30%{opacity:1}100%{opacity:0}}
+#intro .door{position:absolute;top:0;bottom:0;width:50.2%;background:linear-gradient(#0f0f0f,#000 70%);box-shadow:inset 0 0 0 1px rgba(212,175,55,.18);transition:transform 1.4s cubic-bezier(.77,0,.18,1)}
+#intro .l{left:0}#intro .r{right:0}
+#intro.open .l{transform:translateX(-101%)}#intro.open .r{transform:translateX(101%)}
+#intro .seam{position:absolute;top:0;bottom:0;left:50%;width:2px;margin-left:-1px;background:var(--gold-l);box-shadow:0 0 30px 8px rgba(243,220,138,.55);opacity:0;transform:scaleY(0);transition:transform .9s cubic-bezier(.2,.7,.2,1),opacity .4s}
+#intro.lit .seam{opacity:1;transform:scaleY(1)}
+#intro.open .seam{opacity:0;transition:opacity .5s}
+#intro .spot{position:absolute;left:50%;top:-10%;width:min(900px,140vw);height:120%;transform:translateX(-50%);clip-path:polygon(40% 0,60% 0,100% 100%,0 100%);background:linear-gradient(rgba(255,240,205,.3),rgba(255,240,205,0) 85%);opacity:0;transition:opacity 1.2s .2s}
+#intro .ic{position:relative;text-align:center;opacity:0;transition:opacity 1s .7s;mix-blend-mode:screen}
+#intro .ic img{display:block;width:min(70vw,420px)}
+#intro .ic span{display:block;margin-top:1rem;font-size:.7rem;letter-spacing:.6em;text-transform:uppercase;color:var(--gold)}
+#intro.show .spot,#intro.show .ic{opacity:1}
+#intro.open .spot,#intro.open .ic{opacity:0;transition:opacity .6s}
+
+/* sin movimiento (o sin JS): todo visible y sin secciones fijas */
+.static .rv{opacity:1;transform:none;filter:none;transition:none}
+.static #intro{display:none}
+.static .kin{height:auto}
+.static .kin-in{position:static;height:auto;padding:3rem 0}
+.static .kl{opacity:1;transform:none;filter:none;color:var(--gold-l);transition:none}
+.static .hall{height:auto}
+.static .hall-in{position:static;height:auto;overflow-x:auto;padding:2rem 6vw 3rem}
+.static .hui{display:none}
+.static .fx{opacity:.9}
+@media(prefers-reduced-motion:reduce){.gold,.line,.vf em::before{animation:none}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<div id="bar"></div><div id="glow"></div>
+<div id="intro" aria-hidden="true">
+  <div class="bloom"></div><div class="door l"></div><div class="door r"></div><div class="seam"></div><div class="spot"></div>
+  <div class="ic"><img src="assets/logo-fora.png" alt=""><span>presenta</span></div>
+</div>
+<div id="night" aria-hidden="true"><canvas id="cv"></canvas></div>
+<div id="bar"></div><div id="glow"></div><div id="flash"></div>
 <header>
   <a class="logo" href="#inicio" aria-label="Fora Visual"><img src="assets/logo-fora.png" alt="Fora Visual"></a>
   <span class="proj gold">Norick Ft Penyair x Fora</span>
@@ -83,10 +196,14 @@ footer{position:relative;z-index:2;text-align:center;padding:12vh 6vw 8vh}
 
 <!-- PORTADA -->
 <section class="full" id="inicio">
-  <p class="eyebrow rv">Propuesta de videoclip</p>
-  <h1 class="gold rv d1">El museo<br>de los otros</h1>
-  <p class="rv d2" style="margin-top:2rem;letter-spacing:.3em;font-size:.8rem;text-transform:uppercase">Penyair &nbsp;·&nbsp; Norick</p>
-  <div class="line"></div>
+  <canvas id="dust" aria-hidden="true"></canvas>
+  <div class="hc">
+    <p class="eyebrow rv">Propuesta de videoclip</p>
+    <h1 class="gold rv d1">El museo<br>de los otros</h1>
+    <p class="rv d2" style="margin-top:2rem;letter-spacing:.3em;font-size:.8rem;text-transform:uppercase">Penyair &nbsp;·&nbsp; Norick</p>
+    <span class="hint rv d3">Desliza</span>
+    <div class="line"></div>
+  </div>
 </section>
 
 <hr>
@@ -100,6 +217,12 @@ footer{position:relative;z-index:2;text-align:center;padding:12vh 6vw 8vh}
   <p class="rv">Cada uno está presentado como una pieza única. Su vestuario, sus objetos y su corporalidad hacen evidente quiénes son y de dónde vienen. Sin embargo, al estar inmóviles sobre los pedestales, dejan de ser percibidos como personas y comienzan a ser tratados como <b>objetos de observación</b>.</p>
   <p class="rv">Los personajes se construyen mediante croma key para adquirir diferentes escalas: algunos aparecen enormes frente a las casas, otros sobre terrazas y otros integrados a la arquitectura. Parecen verdaderas esculturas humanas instaladas en un territorio que nunca fue pensado como museo.</p>
   <div class="ph tall rv" style="max-width:520px;margin-inline:auto"><small>Figura a escala gigante frente a las casas</small></div>
+  <div class="stats rv">
+    <div><b class="gold" data-to="8">8</b><span>Figuras</span></div>
+    <div><b class="gold" data-to="2">2</b><span>Protagonistas</span></div>
+    <div><b class="gold" data-to="1">1</b><span>Barrio</span></div>
+    <div><b class="gold" data-to="1">1</b><span>Noche final</span></div>
+  </div>
 </section>
 
 <hr>
@@ -128,42 +251,52 @@ footer{position:relative;z-index:2;text-align:center;padding:12vh 6vw 8vh}
   <p class="eyebrow rv">Entonces aparecen</p>
   <h2 class="gold rv">Los visitantes</h2>
   <p class="rv">Un grupo de turistas extranjeros y personas de una clase social evidentemente privilegiada recorre el barrio como quien visita una atracción. Su vestuario, sus accesorios, sus cámaras, sus celulares y la seguridad con la que ocupan el espacio dejan clara la diferencia económica con quienes están siendo exhibidos.</p>
-  <div class="ph wide rv"><small>Turistas recorriendo el barrio</small></div>
-  <div class="ev rv">
-    <span>Llegan en grupo.</span><span>Caminan con tranquilidad.</span><span>Observan.</span><span>Fotografían.</span><span>Se detienen frente a las figuras.</span>
-  </div>
+  <div class="ph wide cam rv"><small>Turistas recorriendo el barrio</small></div>
+  <div class="kin" style="--s:30"><div class="kin-in">
+    <div class="kl">Llegan en grupo.</div><div class="kl">Caminan con tranquilidad.</div><div class="kl">Observan.</div><div class="kl" data-f="1">Fotografían.</div><div class="kl">Se detienen frente a las figuras.</div>
+  </div></div>
   <div class="split">
-    <div class="ph rv"><small>Turista fotografiando</small></div>
-    <div class="ph rv d2"><small>Turistas posando frente a una figura</small></div>
+    <div class="ph cam rv"><small>Turista fotografiando</small></div>
+    <div class="ph cam rv d2"><small>Turistas posando frente a una figura</small></div>
   </div>
+  <div class="kin cam" style="--s:18"><div class="kin-in">
+    <div class="kl">Miran a Penyair.</div><div class="kl">Miran a Norick.</div><div class="kl">Miran al campesino.</div><div class="kl">Miran a la mujer indígena.</div><div class="kl">Miran al hombre afrocolombiano.</div><div class="kl">Miran a la madre.</div><div class="kl">Miran al reciclador.</div><div class="kl">Miran a la persona en silla de ruedas.</div>
+  </div></div>
   <p class="rv">Los turistas pueden observar a Penyair herido mientras continúa rapeando. Pueden fotografiar a Norick mientras sangra por la pierna. La violencia que atraviesa los cuerpos se convierte, dentro de la lógica del museo, en otra característica de la obra.</p>
   <p class="big rv" style="margin-top:4rem">El barrio se convierte en un espectáculo.<br><span class="gold">Y sus habitantes, en parte de ese espectáculo.</span></p>
 </section>
 
 <hr>
 <!-- PERSONAJES -->
-<section id="personajes">
+<section id="personajes" style="padding-bottom:4vh">
   <p class="eyebrow rv">Ocho piezas</p>
   <h2 class="gold rv">Las figuras</h2>
   <p class="rv">Cada personaje tiene una identidad visual clara y reconocible, evitando caricaturas. Ninguno es presentado desde la lástima.</p>
-  <div class="grid">
-    <div class="card rv"><span class="num">01</span><h3>Penyair</h3><div class="ph tall"><small>Penyair</small></div><p>Figura central de la exposición. Golpeado, herido y sangrando mientras interpreta.</p></div>
-    <div class="card rv d1"><span class="num">02</span><h3>Norick</h3><div class="ph tall"><small>Norick</small></div><p>Figura central. Herida de bala visible en una pierna durante el día.</p></div>
-    <div class="card rv d2"><span class="num">03</span><h3>Campesino</h3><div class="ph tall"><small>Campesino</small></div><p>Vestuario de trabajo, botas, herramientas y objetos del campo: alguien extraído de su contexto y convertido en pieza de museo.</p></div>
-    <div class="card rv"><span class="num">04</span><h3>Mujer indígena</h3><div class="ph tall"><small>Mujer indígena</small></div><p>Vestuario basado en referencias culturales reales y específicas, sin mezclar símbolos de distintas comunidades. Identidad, no exotismo.</p></div>
-    <div class="card rv d1"><span class="num">05</span><h3>Hombre afrocolombiano</h3><div class="ph tall"><small>Hombre afrocolombiano</small></div><p>Presencia contemporánea y contundente, lejos de la representación folclórica; completamente integrado al presente.</p></div>
-    <div class="card rv d2"><span class="num">06</span><h3>Madre cabeza de hogar</h3><div class="ph tall"><small>Madre cabeza de hogar</small></div><p>Vestuario cotidiano y objetos domésticos (canasta, utensilios, ropa) que luego se convierten en coreografía.</p></div>
-    <div class="card rv"><span class="num">07</span><h3>Reciclador</h3><div class="ph tall"><small>Reciclador</small></div><p>Carreta, costales, cartones y plásticos como parte fundamental de su identidad visual y de su performance.</p></div>
-    <div class="card rv d1"><span class="num">08</span><h3>Persona en silla de ruedas</h3><div class="ph tall"><small>Persona en silla de ruedas</small></div><p>La silla hace parte de la composición, pero el personaje no se construye desde la lástima: presencia activa y el mismo peso narrativo que los demás.</p></div>
-  </div>
 </section>
+<div class="hall" id="hall">
+  <div class="hall-in">
+    <div class="track">
+      <article class="fig"><span class="num">01</span><h3>Penyair</h3><div class="ph tall"><small>Penyair</small></div><p>Figura central de la exposición. Golpeado, herido y sangrando mientras interpreta.</p></article>
+      <article class="fig"><span class="num">02</span><h3>Norick</h3><div class="ph tall"><small>Norick</small></div><p>Figura central. Herida de bala visible en una pierna durante el día.</p></article>
+      <article class="fig"><span class="num">03</span><h3>Campesino</h3><div class="ph tall"><small>Campesino</small></div><p>Vestuario de trabajo, botas, herramientas y objetos del campo: alguien extraído de su contexto y convertido en pieza de museo.</p></article>
+      <article class="fig"><span class="num">04</span><h3>Mujer indígena</h3><div class="ph tall"><small>Mujer indígena</small></div><p>Vestuario basado en referencias culturales reales y específicas, sin mezclar símbolos de distintas comunidades. Identidad, no exotismo.</p></article>
+      <article class="fig"><span class="num">05</span><h3>Hombre afrocolombiano</h3><div class="ph tall"><small>Hombre afrocolombiano</small></div><p>Presencia contemporánea y contundente, lejos de la representación folclórica; completamente integrado al presente.</p></article>
+      <article class="fig"><span class="num">06</span><h3>Madre cabeza de hogar</h3><div class="ph tall"><small>Madre cabeza de hogar</small></div><p>Vestuario cotidiano y objetos domésticos (canasta, utensilios, ropa) que luego se convierten en coreografía.</p></article>
+      <article class="fig"><span class="num">07</span><h3>Reciclador</h3><div class="ph tall"><small>Reciclador</small></div><p>Carreta, costales, cartones y plásticos como parte fundamental de su identidad visual y de su performance.</p></article>
+      <article class="fig"><span class="num">08</span><h3>Persona en silla de ruedas</h3><div class="ph tall"><small>Persona en silla de ruedas</small></div><p>La silla hace parte de la composición, pero el personaje no se construye desde la lástima: presencia activa y el mismo peso narrativo que los demás.</p></article>
+    </div>
+    <div class="hui"><span class="hh">Recorre el museo →</span><i class="hbar"><b></b></i><span><span id="hn">01</span> / 08</span></div>
+  </div>
+</div>
 
 <hr>
 <!-- GIRO -->
 <section id="inversion">
   <p class="eyebrow rv">Pero algo empieza a cambiar</p>
   <h2 class="gold rv">La mirada se invierte</h2>
-  <div class="ev rv"><span>Penyair se mueve.</span><span>Norick se mueve.</span></div>
+  <div class="kin mv" id="k3" style="--s:48"><div class="kin-in">
+    <div class="kl">Penyair se mueve.</div><div class="kl">Norick se mueve.</div>
+  </div></div>
   <p class="rv">Las figuras abandonan lentamente su condición de esculturas y los pedestales dejan de ser lugares de exhibición para convertirse en escenarios. La música despierta el espacio y los demás personajes desarrollan sus propios performances: el reciclador atraviesa el barrio con su carreta, el campesino con sus herramientas, la mujer indígena con presencia corporal propia, la madre convierte lo doméstico en coreografía, el hombre afrocolombiano ocupa el espacio con fuerza y la persona en silla de ruedas atraviesa el escenario.</p>
   <div class="ph wide rv"><small>Las figuras se mueven y rapean sobre los pedestales</small></div>
   <p class="rv">Las escaleras se convierten en escenarios. Las terrazas, en plataformas. Las fachadas, en fondos. Los cables, las puertas, las ventanas y la ropa tendida dejan de ser paisaje y forman parte de una gran puesta en escena.</p>
@@ -172,6 +305,23 @@ footer{position:relative;z-index:2;text-align:center;padding:12vh 6vw 8vh}
     <div class="ph rv d2"><small>Terrazas como plataformas</small></div>
   </div>
   <p class="rv">Penyair y Norick miran directamente a los turistas. La cámara abandona el punto de vista del visitante y muestra a los turistas desde la perspectiva de quienes viven en el barrio. <b>Los observados empiezan a observar.</b></p>
+  <div class="eye rv">
+    <svg viewBox="0 0 400 200" role="img" aria-label="Un ojo que mira">
+      <defs>
+        <radialGradient id="ir"><stop offset="0" stop-color="#8a6d1a"/><stop offset=".55" stop-color="#d4af37"/><stop offset="1" stop-color="#f3dc8a"/></radialGradient>
+        <clipPath id="lid"><path d="M8 100Q200-30 392 100Q200 230 8 100Z"/></clipPath>
+      </defs>
+      <g id="eyeg">
+        <path d="M8 100Q200-30 392 100Q200 230 8 100Z" fill="#0a0a0a"/>
+        <g clip-path="url(#lid)"><g transform="translate(200 100)"><g id="pup">
+          <circle r="64" fill="url(#ir)"/><circle r="50" fill="none" stroke="#000" stroke-opacity=".3" stroke-dasharray="3 6"/>
+          <circle r="26" fill="#000"/><circle cx="-14" cy="-16" r="7" fill="#fff" opacity=".85"/>
+        </g></g></g>
+        <path d="M8 100Q200-30 392 100Q200 230 8 100Z" fill="none" stroke="#d4af37" stroke-width="2"/>
+        <path d="M8 100Q200-30 392 100" fill="none" stroke="#f3dc8a" stroke-width="4" stroke-linecap="round"/>
+      </g>
+    </svg>
+  </div>
   <p class="big rv" style="margin-top:4rem">La pobreza deja de ser una postal.<br>El barrio deja de ser un objeto turístico.<br><span class="gold">Las personas dejan de ser piezas de exposición.</span></p>
 </section>
 
@@ -226,24 +376,165 @@ footer{position:relative;z-index:2;text-align:center;padding:12vh 6vw 8vh}
 </footer>
 
 <script>
-// revelado al hacer scroll
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),ease=t=>t*t*(3-2*t);
+const root=document.documentElement,still=root.classList.contains('static');
+let H=innerHeight,W=root.clientWidth,Y=0,tk=0,rm=0;
+
+// revelado al hacer scroll (arranca cuando se abren las puertas del intro)
 const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&(e.target.classList.add('in'),io.unobserve(e.target))),{threshold:.12});
-document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const start=()=>$$('.rv').forEach(el=>io.observe(el));
 
-// barra de progreso, parallax suave y puntos de navegación
-const secs=[...document.querySelectorAll('section')],nav=document.getElementById('nav'),bar=document.getElementById('bar');
-secs.forEach(s=>{const a=document.createElement('a');a.href='#'+s.id;nav.append(a)});
-const dots=[...nav.children],phs=[...document.querySelectorAll('.ph')];
-const still=matchMedia('(prefers-reduced-motion:reduce)').matches;
-function tick(){
-  const y=scrollY;bar.style.width=y/(document.body.scrollHeight-innerHeight)*100+'%';
-  secs.forEach((s,i)=>dots[i].classList.toggle('on',s.offsetTop-innerHeight/2<=y&&s.offsetTop+s.offsetHeight-innerHeight/2>y));
-  if(!still)phs.forEach(p=>{const r=p.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)p.style.backgroundPosition='0 '+(r.top*.15)+'px'});
+const secs=$$('section'),dots=secs.map(s=>{const a=document.createElement('a');a.href='#'+s.id;a.setAttribute('aria-label',s.id);$('#nav').append(a);return a});
+const bar=$('#bar'),head=$('header'),hc=$('.hc'),night=$('#night'),fin=$('#final'),flashEl=$('#flash');
+const hall=$('#hall'),track=$('.track'),figs=$$('.fig'),hn=$('#hn');
+const kins=$$('.kin').map(k=>({k,in:k.firstElementChild,l:[...k.querySelectorAll('.kl')],i:-2}));
+const k3=$('#k3'),allPh=$$('.ph'),par=allPh.filter(p=>!p.closest('.track'));
+let tops=[],cx=[],dist=0,endK3=0,finTop=0,NA=-1,M=-1,hide=false,lf=0,lw=0,lh=0;
+
+// flash de pantalla completa (máx. uno por segundo)
+function flash(a=.6){const t=performance.now();if(still||t-lf<1000)return;lf=t;flashEl.style.setProperty('--fa',a);flashEl.classList.remove('go');void flashEl.offsetWidth;flashEl.classList.add('go')}
+
+function measure(){
+  H=innerHeight;W=root.clientWidth;
+  if(!still){
+    kins.forEach(o=>o.k.style.setProperty('--n',o.l.length));
+    cx=figs.map(f=>f.offsetLeft+f.offsetWidth/2);dist=cx[cx.length-1]-cx[0];hall.style.height=dist+H*1.5+'px';
+  }
+  const t=el=>el.getBoundingClientRect().top+scrollY;
+  tops=secs.map(t);finTop=t(fin);endK3=t(k3)+k3.offsetHeight;
+  if(W!==lw||H!==lh){lw=W;lh=H;dustInit();nightBuild()}
+  frame();
 }
-addEventListener('scroll',tick,{passive:true});tick();
+const sched=()=>{cancelAnimationFrame(rm);rm=requestAnimationFrame(measure)};
 
-// luz dorada que sigue al cursor (solo PC)
-addEventListener('pointermove',e=>{if(e.pointerType==='mouse'){const g=document.getElementById('glow').style;g.setProperty('--x',e.clientX+'px');g.setProperty('--y',e.clientY+'px')}});
+function frame(){
+  tk=0;const y=scrollY,dy=y-Y;Y=y;
+  bar.style.width=y/(root.scrollHeight-H)*100+'%';
+  let ai=0;tops.forEach((t,i)=>{if(y+H*.5>=t)ai=i});dots.forEach((d,i)=>d.classList.toggle('on',i===ai));
+  if(still)return;
+
+  if(dy>4&&y>160)hide=true;else if(dy<-4||y<160)hide=false;
+  head.classList.toggle('hide',hide);
+  if(y<H*1.2){hc.style.transform=`translateY(${y*.3}px)`;hc.style.opacity=clamp(1-y/(H*.8))}
+
+  // museo → territorio: grises, marco y pedestal se disuelven tras "Penyair se mueve. Norick se mueve."
+  const m=1-ease(clamp((y-(endK3-H*.3))/(H*1.2)));
+  if(Math.abs(m-M)>.004){M=m;root.style.setProperty('--m',m.toFixed(3))}
+
+  // la noche (fondo + luces de ciudad) entra al llegar a la sección final
+  const n=ease(clamp((y-(finTop-H*.6))/(H*.9)));
+  if(Math.abs(n-NA)>.004){NA=n;night.style.opacity=n}
+
+  par.forEach(p=>{const r=p.getBoundingClientRect();if(r.bottom>0&&r.top<H)p.style.setProperty('--py',((r.top+r.height/2-H/2)*-.08).toFixed(1)+'px')});
+
+  // texto cinético: enciende la línea activa; "Fotografían." dispara el flash
+  kins.forEach(o=>{
+    const r=o.k.getBoundingClientRect(),raw=-r.top/(r.height-o.in.offsetHeight),n=o.l.length;
+    const i=raw<0?-1:Math.min(n-1,Math.floor(raw*n));
+    if(i===o.i)return;
+    const fwd=i>o.i;o.i=i;
+    o.l.forEach((l,j)=>{l.classList.toggle('act',j===i);l.classList.toggle('past',j<i)});
+    if(fwd&&o.l[i]&&o.l[i].dataset.f)flash(.7);
+  });
+
+  // pasillo del museo: el foco se enciende sobre la figura que pasa por el centro
+  const hr=hall.getBoundingClientRect();
+  if(hr.bottom>-H&&hr.top<H*2){
+    const p=clamp((-hr.top-H*.25)/dist),tx=W/2-(cx[0]+p*dist);
+    track.style.transform=`translate3d(${tx.toFixed(1)}px,0,0)`;
+    figs.forEach((f,i)=>f.style.setProperty('--lit',Math.max(0,1-Math.abs(cx[i]+tx-W/2)/(W*.32)).toFixed(3)));
+    hall.style.setProperty('--hp',p.toFixed(3));
+    hn.textContent=String(Math.round(p*(figs.length-1))+1).padStart(2,'0');
+  }
+
+  // el ojo mira hacia donde vas cuando no hay mouse
+  if(eyeVis&&performance.now()-lp>800&&Math.abs(dy)>2){ey=dy>0?.9:-.9;ex=0;look()}
+}
+
+// visor y flash de cámara en las imágenes de los turistas
+let shots=0;
+const VF='<span class="vf"><i></i><i></i><i></i><i></i><em>REC</em><u>IMG_0412</u><span class="fx"></span><span class="fl"></span></span>';
+function shot(el){el.querySelector('.vf u').textContent='IMG_'+String(412+ ++shots).padStart(4,'0');if(still)return;el.classList.remove('shot');void el.offsetWidth;el.classList.add('shot')}
+const camIO=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;camIO.unobserve(e.target);e.target.classList.add('lock');setTimeout(()=>shot(e.target),950)}),{threshold:.6});
+$$('.cam').forEach(el=>{el.insertAdjacentHTML('beforeend',VF);camIO.observe(el);el.addEventListener('click',()=>shot(el))});
+
+// contadores
+const st=$('.stats');
+if(!still){
+  st.querySelectorAll('b').forEach(b=>b.textContent=0);
+  new IntersectionObserver((es,o)=>es.forEach(e=>{if(!e.isIntersecting)return;o.disconnect();
+    st.querySelectorAll('b').forEach(b=>{const to=+b.dataset.to,t0=performance.now();(function f(t){const k=clamp((t-t0)/1400);b.textContent=Math.round(to*(1-(1-k)**3));k<1&&requestAnimationFrame(f)})(t0)})}),{threshold:.6}).observe(st);
+}
+
+// el ojo que observa
+const eye=$('.eye'),pup=$('#pup'),eg=$('#eyeg');let ex=0,ey=0,lp=0,eyeVis=false;
+const look=()=>pup.style.transform=`translate(${ex*58}px,${ey*22}px)`;
+new IntersectionObserver(e=>eyeVis=e[0].isIntersecting).observe(eye);
+if(!still){
+  addEventListener('pointermove',e=>{lp=performance.now();const r=eye.getBoundingClientRect();ex=clamp((e.clientX-r.left-r.width/2)/(W*.3),-1,1);ey=clamp((e.clientY-r.top-r.height/2)/(H*.3),-1,1);look();
+    if(e.pointerType==='mouse'){const g=$('#glow').style;g.setProperty('--x',e.clientX+'px');g.setProperty('--y',e.clientY+'px')}},{passive:true});
+  setInterval(()=>{if(eyeVis&&performance.now()-lp>2500){ex=(Math.random()*2-1)*.85;ey=(Math.random()*2-1)*.7;look()}},1400);
+  (function bl(){setTimeout(()=>{if(eyeVis){eg.classList.add('blink');setTimeout(()=>eg.classList.remove('blink'),220)}bl()},3000+Math.random()*4000)})();
+  // foco que sigue al mouse dentro de cada imagen
+  allPh.forEach(p=>p.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;const r=p.getBoundingClientRect();p.style.setProperty('--mx',e.clientX-r.left+'px');p.style.setProperty('--my',e.clientY-r.top+'px')}));
+}
+
+// polvo dorado en la portada
+const dc=$('#dust'),dx=dc.getContext('2d');let dp=[],heroVis=true;
+new IntersectionObserver(e=>heroVis=e[0].isIntersecting).observe($('#inicio'));
+function dustInit(){
+  dc.width=dc.offsetWidth;dc.height=dc.offsetHeight;
+  dp=Array.from({length:Math.min(90,Math.round(dc.width*dc.height/16000))},()=>({x:Math.random()*dc.width,y:Math.random()*dc.height,r:.6+Math.random()*1.5,v:.1+Math.random()*.3,p:Math.random()*6.28,s:.5+Math.random()*1.5}));
+  if(still)dustDraw(0);
+}
+function dustDraw(t){
+  dx.clearRect(0,0,dc.width,dc.height);
+  dp.forEach(o=>{if(!still){o.y-=o.v;if(o.y<-4)o.y=dc.height+4}
+    dx.fillStyle=`rgba(243,220,138,${.15+.6*Math.abs(Math.sin(t/1000*o.s+o.p))})`;dx.beginPath();dx.arc(o.x+Math.sin(t/1800+o.p)*14,o.y,o.r,0,6.3);dx.fill()});
+}
+
+// la noche: estrellas, luces de ciudad y siluetas
+const cv=$('#cv'),nx=cv.getContext('2d');let stars,bld,wins,bok;
+function nightBuild(){
+  const w=cv.width=innerWidth,h=cv.height=innerHeight,R=Math.random;
+  stars=Array.from({length:Math.round(w/12)},()=>({x:R()*w,y:R()*h*.6,r:R()*1.1+.3,p:R()*6.28,s:.5+R()*1.5}));
+  bld=[];for(let x=-10;x<w;){const bw=18+R()*44;bld.push({x,w:bw,h:h*(.06+R()*.2)});x+=bw+(R()<.3?4:0)}
+  wins=[];bld.forEach(b=>{for(let wx=b.x+4;wx<b.x+b.w-4;wx+=7)for(let wy=h-b.h+6;wy<h-4;wy+=9)if(R()<.35)wins.push({x:wx,y:wy,p:R()*6.28,s:.3+R()*1.2,c:R()<.2?'255,255,255':'255,214,120'})});
+  bok=Array.from({length:Math.round(w/60)},()=>({x:R()*w,y:h*(.62+R()*.3),r:8+R()*26,p:R()*6.28}));
+  if(still)nightDraw(0);
+}
+function nightDraw(t){
+  const w=cv.width,h=cv.height;nx.clearRect(0,0,w,h);
+  const g=nx.createLinearGradient(0,h*.55,0,h);g.addColorStop(0,'rgba(212,175,55,0)');g.addColorStop(1,'rgba(212,175,55,.22)');nx.fillStyle=g;nx.fillRect(0,h*.55,w,h*.45);
+  stars.forEach(s=>{nx.fillStyle=`rgba(255,246,220,${.25+.5*Math.abs(Math.sin(t/1000*s.s+s.p))})`;nx.fillRect(s.x,s.y,s.r,s.r)});
+  bok.forEach(b=>{const gr=nx.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r);gr.addColorStop(0,`rgba(255,214,120,${.08+.1*Math.abs(Math.sin(t/2000+b.p))})`);gr.addColorStop(1,'rgba(255,214,120,0)');nx.fillStyle=gr;nx.beginPath();nx.arc(b.x,b.y,b.r,0,6.3);nx.fill()});
+  nx.fillStyle='#04060d';bld.forEach(b=>nx.fillRect(b.x,h-b.h,b.w,b.h));
+  wins.forEach(o=>{nx.fillStyle=`rgba(${o.c},${.25+.65*Math.abs(Math.sin(t/1500*o.s+o.p))})`;nx.fillRect(o.x,o.y,2,3)});
+}
+let lt=0;
+function anim(t){requestAnimationFrame(anim);if(t-lt<33)return;lt=t;if(heroVis)dustDraw(t);if(NA>.01)nightDraw(t)}
+
+// intro: foco → rendija de luz → puertas
+function intro(){
+  const el=$('#intro');
+  if(still){start();return}
+  root.classList.add('lock');
+  let done=false;
+  const open=()=>{if(done)return;done=true;el.classList.add('open');root.classList.remove('lock');start();setTimeout(()=>el.remove(),1800)};
+  requestAnimationFrame(()=>el.classList.add('show'));
+  setTimeout(()=>el.classList.add('lit'),1500);
+  setTimeout(open,2500);
+  el.addEventListener('click',open);
+}
+
+addEventListener('scroll',()=>{tk||(tk=requestAnimationFrame(frame))},{passive:true});
+addEventListener('resize',sched);
+addEventListener('load',sched);
+new ResizeObserver(sched).observe(document.body);
+document.fonts&&document.fonts.ready.then(sched);
+if(still)root.style.setProperty('--m',0);else requestAnimationFrame(anim);
+measure();intro();
 </script>
 </body>
 </html>
