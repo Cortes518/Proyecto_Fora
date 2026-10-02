@@ -157,7 +157,7 @@ footer{position:relative;z-index:2;text-align:center;padding:12vh 6vw 8vh}
 #intro .door{position:absolute;top:0;bottom:0;width:50.2%;background:linear-gradient(#0f0f0f,#000 70%);box-shadow:inset 0 0 0 1px rgba(212,175,55,.18);transition:transform 1.4s cubic-bezier(.77,0,.18,1)}
 #intro .l{left:0}#intro .r{right:0}
 #intro.open .l{transform:translateX(-101%)}#intro.open .r{transform:translateX(101%)}
-#intro .seam{position:absolute;top:0;bottom:0;left:50%;width:2px;margin-left:-1px;background:var(--gold-l);box-shadow:0 0 30px 8px rgba(243,220,138,.55);opacity:0;transform:scaleY(0);transition:transform .9s cubic-bezier(.2,.7,.2,1),opacity .4s}
+#intro .seam{position:absolute;z-index:5;top:0;bottom:0;left:50%;width:2px;margin-left:-1px;background:var(--gold);box-shadow:0 0 22px 5px rgba(243,220,138,.6);opacity:0;transform:scaleY(0);transition:transform .9s cubic-bezier(.2,.7,.2,1),opacity .1s}
 #intro.lit .seam{opacity:1;transform:scaleY(1)}
 #intro.open .seam{opacity:0;transition:opacity .5s}
 #intro .spot{position:absolute;left:50%;top:-10%;width:min(900px,140vw);height:120%;transform:translateX(-50%);clip-path:polygon(40% 0,60% 0,100% 100%,0 100%);background:linear-gradient(rgba(255,240,205,.3),rgba(255,240,205,0) 85%);opacity:0;transition:opacity 1.2s .2s}
