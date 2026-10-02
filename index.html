@@ -162,8 +162,8 @@ footer{position:relative;z-index:2;text-align:center;padding:12vh 6vw 8vh}
 #intro.open .seam{opacity:0;transition:opacity .5s}
 #intro .spot{position:absolute;left:50%;top:-10%;width:min(900px,140vw);height:120%;transform:translateX(-50%);clip-path:polygon(40% 0,60% 0,100% 100%,0 100%);background:linear-gradient(rgba(255,240,205,.3),rgba(255,240,205,0) 85%);opacity:0;transition:opacity 1.2s .2s}
 #intro .ic{position:relative;text-align:center;opacity:0;transition:opacity 1s .7s;mix-blend-mode:screen}
-#intro .ic img{display:block;width:min(70vw,420px)}
-#intro .ic span{display:block;margin-top:1rem;font-size:.7rem;letter-spacing:.6em;text-transform:uppercase;color:var(--gold)}
+#intro .ic img{display:block;width:min(70vw,420px);transform:translateX(5.3%)} /* el espacio entre FORA y VISUAL queda justo bajo la linea */
+#intro .ic span{display:block;margin-top:1rem;padding-left:.6em;font-size:.7rem;letter-spacing:.6em;text-transform:uppercase;color:var(--gold)}
 #intro.show .spot,#intro.show .ic{opacity:1}
 #intro.open .spot,#intro.open .ic{opacity:0;transition:opacity .6s}
 
