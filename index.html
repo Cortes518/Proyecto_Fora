@@ -6,9 +6,9 @@
 <title>El museo de los otros</title>
 <script>if(!matchMedia('(prefers-reduced-motion:reduce)').matches)document.documentElement.classList.remove('static')</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-:root{--gold:#d4af37;--gold-l:#f3dc8a;--gold-d:#8a6d1a;--white:#f5f1e6;--bg:#000;--m:1}
+:root{--fh:"Outfit","Montserrat",sans-serif;--gold:#d4af37;--gold-l:#f3dc8a;--gold-d:#8a6d1a;--white:#f5f1e6;--bg:#000;--m:1}
 .static{--m:0} /* --m: 1 = museo (marco, pedestal) · 0 = territorio (libre) */
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -37,8 +37,8 @@ header.hide{transform:translateY(-110%)}
 
 section{position:relative;z-index:2;padding:14vh 6vw;max-width:1200px;margin:0 auto}
 .full{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;max-width:none}
-h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.1}
-h1{font-size:clamp(3rem,10vw,8rem);letter-spacing:.04em}
+h1,h2,h3{font-family:var(--fh);font-weight:600;letter-spacing:-.01em;line-height:1.1}
+h1{font-size:clamp(2.8rem,9vw,7rem);letter-spacing:-.02em}
 h2{font-size:clamp(2rem,5.5vw,4rem);margin-bottom:.6em}
 h2::after{content:"";display:block;height:1px;width:0;margin-top:.3em;background:linear-gradient(90deg,var(--gold),transparent);transition:width 1.6s .4s cubic-bezier(.2,.7,.2,1)}
 h2.in::after,.static h2::after{width:min(240px,45%)}
@@ -50,7 +50,7 @@ h3{font-size:1.6rem;color:var(--gold-l);margin-bottom:.3em}
 @keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 p{margin-bottom:1.4em;font-size:1.05rem;max-width:62ch}
 p b{color:var(--gold-l);font-weight:600}
-.big{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,4vw,2.8rem);line-height:1.3;max-width:24ch;margin:0 auto;text-align:center}
+.big{font-family:var(--fh);font-size:clamp(1.5rem,3.6vw,2.5rem);font-weight:500;line-height:1.3;max-width:26ch;margin:0 auto;text-align:center}
 hr{border:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto;max-width:600px;position:relative;z-index:2}
 
 /* portada: foco de museo, polvo dorado y parallax */
@@ -62,7 +62,7 @@ hr{border:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),
 
 /* placeholders de imagen numerados (el estado --m aplica a las fotos reales también) */
 .ph{position:relative;overflow:hidden;aspect-ratio:16/9;margin:2.5rem 0;border:1px solid rgba(212,175,55,.45);display:flex;align-items:center;justify-content:center;flex-direction:column;
- background:repeating-linear-gradient(45deg,#0c0c0c 0 14px,#111 14px 28px) 0 var(--py,0)/auto;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:.2em;text-align:center;
+ background:repeating-linear-gradient(45deg,#0c0c0c 0 14px,#111 14px 28px) 0 var(--py,0)/auto;color:var(--gold);font-family:var(--fh);font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:.2em;text-align:center;
  box-shadow:0 0 0 calc(var(--m)*7px) #ece8de}
 .ph::before{counter-increment:img;content:"IMAGEN " counter(img,decimal-leading-zero)}
 .ph.has::before{display:none} /* con foto, el cuadro ya no cuenta como placeholder */
@@ -77,13 +77,13 @@ hr{border:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),
 .card{border-top:1px solid var(--gold);padding-top:1rem}
 .card .ph{margin:0 0 1rem}
 .card p{font-size:.92rem}
-.num{font-family:'Cormorant Garamond';color:var(--gold);font-size:.9rem;letter-spacing:.3em}
+.num{font-family:var(--fh);color:var(--gold);font-size:.9rem;letter-spacing:.3em}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
 @media(max-width:800px){.split{grid-template-columns:1fr;gap:1rem}}
 
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin:4rem 0 1rem;text-align:center}
 @media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
-.stats b{display:block;font:500 clamp(2.6rem,7vw,4.5rem)/1 'Cormorant Garamond',serif}
+.stats b{display:block;font:600 clamp(2.6rem,7vw,4.5rem)/1 var(--fh)}
 .stats span{font-size:.7rem;letter-spacing:.35em;text-transform:uppercase;opacity:.7}
 
 /* visor y flash de cámara */
@@ -108,7 +108,7 @@ hr{border:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),
 /* texto cinético: las frases cortas se encienden una a una al hacer scroll */
 .kin{height:calc(100vh + var(--n,5)*var(--s,28)*1vh);margin:2rem 0}
 .kin-in{position:sticky;top:0;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:.15em}
-.kl{position:relative;display:inline-block;font:500 clamp(1.7rem,6.2vw,4.4rem)/1.2 'Cormorant Garamond',serif;color:var(--white);opacity:.14;transform:translateY(14px) scale(.96);filter:blur(1.5px);transition:opacity .7s,transform .7s cubic-bezier(.2,.7,.2,1),filter .7s,color .7s}
+.kl{position:relative;display:inline-block;font:600 clamp(1.6rem,5.6vw,3.8rem)/1.2 var(--fh);color:var(--white);opacity:.14;transform:translateY(14px) scale(.96);filter:blur(1.5px);transition:opacity .7s,transform .7s cubic-bezier(.2,.7,.2,1),filter .7s,color .7s}
 .kl.past{opacity:.4;transform:none;filter:none}
 .kl.act{opacity:1;transform:none;filter:none;color:var(--gold-l)}
 .kin.mv .kl{transform:translateX(-70px)}
@@ -130,7 +130,7 @@ hr{border:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),
 .fig .ph{margin:0 0 3.2rem}
 .fig h3{font-size:1.45rem}
 .fig p{font-size:.88rem;line-height:1.6;margin-bottom:0}
-.hui{position:absolute;left:6vw;right:6vw;bottom:3.5vh;display:flex;align-items:center;gap:1.2rem;z-index:3;font:500 .95rem 'Cormorant Garamond',serif;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+.hui{position:absolute;left:6vw;right:6vw;bottom:3.5vh;display:flex;align-items:center;gap:1.2rem;z-index:3;font:500 .95rem var(--fh);letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
 .hh{opacity:calc(1 - var(--hp,0)*30);white-space:nowrap}
 .hbar{flex:1;height:1px;background:rgba(212,175,55,.25);position:relative}
 .hbar b{position:absolute;inset:0;background:var(--gold);transform:scaleX(var(--hp,0));transform-origin:left}
@@ -348,7 +348,7 @@ footer{position:relative;z-index:2;text-align:center;padding:12vh 6vw 8vh}
   <h2 class="gold rv">Museo y territorio popular</h2>
   <p class="rv">La dirección de arte se construye sobre el contraste entre museo y territorio popular. No se interviene excesivamente el barrio: se aprovecha su arquitectura real para que los elementos museográficos parezcan objetos extraños instalados dentro de una comunidad.</p>
   <div class="grid">
-    <div class="card rv"><h3>Pedestales</h3><div class="ph tall"><img src="img/web/mujer-indigena.jpg" alt="Pedestal blanco geométrico en el barrio" style="object-position:50% 85%" loading="lazy" decoding="async"></div><p>Grandes, blancos, geométricos y minimalistas; apariencia limpia, contemporánea, casi institucional. Algunos bajos y otros muy altos para jugar con las escalas.</p></div>
+    <div class="card rv"><h3>Pedestales</h3><div class="ph tall"><img src="img/web/madre-pedestal.jpg" alt="Madre con su bebé sobre un pedestal blanco geométrico" style="object-position:55% 50%" loading="lazy" decoding="async"></div><p>Grandes, blancos, geométricos y minimalistas; apariencia limpia, contemporánea, casi institucional. Algunos bajos y otros muy altos para jugar con las escalas.</p></div>
     <div class="card rv d1"><h3>El barrio como museo</h3><div class="ph tall"><img src="img/web/barrio.jpg" alt="Terrazas, escaleras y fachadas reales del barrio" loading="lazy" decoding="async"></div><p>Terrazas, escaleras, fachadas, ventanas, cables, ropa tendida y puertas permanecen visibles. Los pedestales son prácticamente lo único artificial.</p></div>
     <div class="card rv d2"><h3>Los turistas</h3><div class="ph tall"><img src="img/web/grupo-turistas.jpg" alt="Turistas con vestuario y accesorios de alto nivel" style="object-position:50% 100%" loading="lazy" decoding="async"></div><p>Prendas costosas, relojes, gafas, cámaras profesionales, celulares de alta gama y bolsos de viaje. No villanos caricaturescos: una clase que entra, consume la experiencia y se va.</p></div>
     <div class="card rv"><h3>Color y fotografía</h3><div class="ph tall"><img src="img/web/set-horizontal.jpg" alt="Equipo de cámara e iluminación durante el rodaje" loading="lazy" decoding="async"></div><p>Estética realista, paleta controlada y ligeramente desaturada. Las heridas destacan de forma natural, sin caer en lo gore. Más contraste y fuerza durante los performances.</p></div>
@@ -361,14 +361,15 @@ footer{position:relative;z-index:2;text-align:center;padding:12vh 6vw 8vh}
   <p class="eyebrow rv">El tramo final</p>
   <h2 class="gold rv">La noche</h2>
   <p class="rv">La historia abandona el día y entra en la noche. En una terraza a gran altura, con una ciudad colombiana extendiéndose detrás, aparecen Penyair y Norick juntos para el performance principal. Esta vez ya no están solos: los acompañan la mujer indígena, el hombre afrocolombiano, el campesino, la madre, el reciclador y la persona en silla de ruedas, cada uno en un nivel distinto de la terraza.</p>
-  <div class="ph wide rv"><small>Terraza nocturna con la ciudad al fondo</small></div>
+  <div class="ph rv" style="aspect-ratio:1168/880;max-width:900px;margin-inline:auto"><img src="img/web/noche-terraza.jpg" alt="Terraza nocturna con la ciudad iluminada al fondo" loading="lazy" decoding="async"></div>
   <p class="rv">Por primera vez, Penyair y Norick aparecen sin la condición de cuerpos exhibidos y heridos. Las heridas y la sangre dejan de dominar la imagen. Lo que queda es <b>la presencia, la identidad, la fuerza colectiva</b>.</p>
+  <div class="ph rv" style="aspect-ratio:1168/880;max-width:900px;margin-inline:auto"><img src="img/web/noche-performance.jpg" alt="Penyair y Norick interpretan en la terraza" loading="lazy" decoding="async"></div>
   <div class="split">
-    <div class="ph tall rv"><small>Penyair y Norick en el centro</small></div>
-    <div class="ph tall rv d2"><small>Personajes en distintos niveles de la terraza</small></div>
+    <div class="ph tall rv"><img src="img/web/noche-centro.jpg" alt="Penyair y Norick en el centro, rodeados por los demás personajes" loading="lazy" decoding="async"></div>
+    <div class="ph tall rv d2"><img src="img/web/noche-grupo.jpg" alt="Los personajes distribuidos en la terraza, con la ciudad iluminada al fondo" loading="lazy" decoding="async"></div>
   </div>
   <p class="rv">La composición parece una gran escultura humana colectiva, pero con una diferencia fundamental: <b>nadie está sobre un pedestal</b>. Ya no están los turistas ni los espectadores. Ya no existe el museo. Ahora los que fueron observados ocupan el centro de la imagen y tienen el control de la mirada.</p>
-  <div class="ph wide rv"><small>Mirada final directa a cámara</small></div>
+  <div class="ph rv" style="aspect-ratio:1168/880;max-width:900px;margin-inline:auto"><img src="img/web/noche-mirada.jpg" alt="Los personajes miran directamente a cámara en la terraza" loading="lazy" decoding="async"></div>
 </section>
 
 <hr>
