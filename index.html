@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 :root{--gold:#d4af37;--gold-l:#f3dc8a;--gold-d:#8a6d1a;--white:#f5f1e6;--bg:#000;--m:1}
-.static{--m:0} /* --m: 1 = museo (gris, marco, pedestal) · 0 = territorio (color, libre) */
+.static{--m:0} /* --m: 1 = museo (marco, pedestal) · 0 = territorio (libre) */
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 html.lock{overflow:hidden}
@@ -65,7 +65,6 @@ hr{border:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),
  background:repeating-linear-gradient(45deg,#0c0c0c 0 14px,#111 14px 28px) 0 var(--py,0)/auto;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:.2em;text-align:center;
  box-shadow:0 0 0 calc(var(--m)*7px) #ece8de}
 .ph::before{counter-increment:img;content:"IMAGEN " counter(img,decimal-leading-zero)}
-.ph>img,.ph>video,.ph>small,.ph::before{filter:grayscale(var(--m))}
 .ph.has::before{display:none} /* con foto, el cuadro ya no cuenta como placeholder */
 .ph small{font:300 .7rem 'Montserrat';letter-spacing:.3em;text-transform:uppercase;color:var(--white);opacity:.6;margin-top:.6rem;padding:0 1rem}
 .ph::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),rgba(255,236,170,.26),transparent 70%);opacity:0;transition:opacity .4s}
@@ -433,7 +432,7 @@ function frame(){
   head.classList.toggle('hide',hide);
   if(y<H*1.2){hc.style.transform=`translateY(${y*.3}px)`;hc.style.opacity=clamp(1-y/(H*.8))}
 
-  // museo → territorio: grises, marco y pedestal se disuelven tras "Penyair se mueve. Norick se mueve."
+  // museo → territorio: marco y pedestal se disuelven tras "Penyair se mueve. Norick se mueve."
   const m=1-ease(clamp((y-(endK3-H*.3))/(H*1.2)));
   if(Math.abs(m-M)>.004){M=m;root.style.setProperty('--m',m.toFixed(3))}
 
