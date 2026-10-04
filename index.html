@@ -65,11 +65,12 @@ hr{border:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),
  background:repeating-linear-gradient(45deg,#0c0c0c 0 14px,#111 14px 28px) 0 var(--py,0)/auto;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,3vw,2.2rem);letter-spacing:.2em;text-align:center;
  box-shadow:0 0 0 calc(var(--m)*7px) #ece8de}
 .ph::before{counter-increment:img;content:"IMAGEN " counter(img,decimal-leading-zero)}
-.ph>img,.ph>small,.ph::before{filter:grayscale(var(--m))}
+.ph>img,.ph>video,.ph>small,.ph::before{filter:grayscale(var(--m))}
+.ph.has::before{display:none} /* con foto, el cuadro ya no cuenta como placeholder */
 .ph small{font:300 .7rem 'Montserrat';letter-spacing:.3em;text-transform:uppercase;color:var(--white);opacity:.6;margin-top:.6rem;padding:0 1rem}
 .ph::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),rgba(255,236,170,.26),transparent 70%);opacity:0;transition:opacity .4s}
 .ph:hover::after{opacity:1}
-.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:translateY(var(--py,0)) scale(1.12)}
+.ph img,.ph video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:translateY(var(--py,0)) scale(1.12)}
 .tall{aspect-ratio:3/4;margin-bottom:3.2rem;box-shadow:0 0 0 calc(var(--m)*7px) #ece8de,0 calc(var(--m)*34px) 0 calc(var(--m)*-5px) #ece8de} /* el pedestal */
 .wide{aspect-ratio:21/9}
 
@@ -211,11 +212,19 @@ footer{position:relative;z-index:2;text-align:center;padding:12vh 6vw 8vh}
   <p class="eyebrow rv">Sinopsis</p>
   <h2 class="gold rv">Un barrio convertido en museo</h2>
   <p class="rv">En un barrio popular de Colombia, la vida cotidiana se transforma en un extraño museo al aire libre. Sobre grandes pedestales museográficos, instalados en terrazas y diferentes puntos del barrio, aparecen <b>ocho figuras humanas</b> completamente inmóviles, como si fueran esculturas pertenecientes a una exposición contemporánea.</p>
-  <div class="ph wide rv"><small>Barrio con pedestales blancos</small></div>
+  <div class="ph tall rv" style="max-width:520px;margin-inline:auto"><img src="img/web/todas-las-figuras.jpg" alt="Las figuras sobre pedestales blancos en el barrio, observadas por turistas" style="object-position:50% 30%"></div>
   <p class="rv">Entre ellas están Penyair y Norick, acompañados por seis personajes que representan diferentes realidades del territorio colombiano: una mujer indígena, un hombre afrocolombiano, un campesino, una madre cabeza de hogar, un reciclador y una persona en silla de ruedas.</p>
+  <div class="ph rv"><img src="img/web/moodboard.jpg" alt="Collage de las figuras y del barrio" loading="lazy" decoding="async"></div>
   <p class="rv">Cada uno está presentado como una pieza única. Su vestuario, sus objetos y su corporalidad hacen evidente quiénes son y de dónde vienen. Sin embargo, al estar inmóviles sobre los pedestales, dejan de ser percibidos como personas y comienzan a ser tratados como <b>objetos de observación</b>.</p>
+  <div class="split">
+    <div class="ph tall rv"><img src="img/web/estatua-penyair.jpg" alt="Penyair convertido en estatua sobre un pedestal" loading="lazy" decoding="async"></div>
+    <div class="ph tall rv d2"><img src="img/web/estatua-norick.jpg" alt="Norick convertido en estatua sobre un pedestal" style="object-position:50% 30%" loading="lazy" decoding="async"></div>
+  </div>
   <p class="rv">Los personajes se construyen mediante croma key para adquirir diferentes escalas: algunos aparecen enormes frente a las casas, otros sobre terrazas y otros integrados a la arquitectura. Parecen verdaderas esculturas humanas instaladas en un territorio que nunca fue pensado como museo.</p>
-  <div class="ph tall rv" style="max-width:520px;margin-inline:auto"><small>Figura a escala gigante frente a las casas</small></div>
+  <div class="split">
+    <div class="ph tall rv"><video data-src="img/hf_20261004_145018_f6983904-2b4f-45f0-a94b-e5d9435e193d.mp4" poster="img/web/estatua-penyair.jpg" muted loop playsinline preload="none" aria-label="Penyair como estatua, en bucle"></video></div>
+    <div class="ph tall rv d2"><img src="img/web/set-vertical.jpg" alt="Set de rodaje con luces, cámaras y las figuras al fondo" style="object-position:50% 25%" loading="lazy" decoding="async"></div>
+  </div>
   <div class="stats rv">
     <div><b class="gold" data-to="8">8</b><span>Figuras</span></div>
     <div><b class="gold" data-to="2">2</b><span>Protagonistas</span></div>
@@ -233,12 +242,12 @@ footer{position:relative;z-index:2;text-align:center;padding:12vh 6vw 8vh}
     <div class="rv">
       <h3>Penyair</h3>
       <p>Visiblemente golpeado y herido desde su primera aparición. Su rostro, brazos y piernas llevan las marcas de la violencia. Incluso mientras interpreta y rapea, continúa sangrando: su propio cuerpo es una imagen permanente de violencia expuesta ante los demás.</p>
-      <div class="ph tall"><small>Penyair sobre el pedestal</small></div>
+      <div class="ph tall"><img src="img/web/penyair.jpg" alt="Penyair sobre el pedestal, golpeado y herido" style="object-position:50% 25%" loading="lazy" decoding="async"></div>
     </div>
     <div class="rv d2">
       <h3>Norick</h3>
       <p>También golpeado. Durante la parte diurna mantiene una herida de bala en una pierna. Al igual que Penyair, continúa interpretando mientras sangra: la violencia no es un elemento aislado, sino una condición permanente de ambos dentro del museo.</p>
-      <div class="ph tall"><small>Norick sobre el pedestal</small></div>
+      <div class="ph tall"><img src="img/web/norick.jpg" alt="Norick sobre el pedestal, con la herida de bala en la pierna" style="object-position:50% 25%" loading="lazy" decoding="async"></div>
     </div>
   </div>
   <p class="rv">Las heridas forman parte de la propia obra que los visitantes están observando. Una persona herida convertida en pieza de museo que, a pesar de su condición, <b>continúa interpretando</b>.</p>
@@ -250,13 +259,13 @@ footer{position:relative;z-index:2;text-align:center;padding:12vh 6vw 8vh}
   <p class="eyebrow rv">Entonces aparecen</p>
   <h2 class="gold rv">Los visitantes</h2>
   <p class="rv">Un grupo de turistas extranjeros y personas de una clase social evidentemente privilegiada recorre el barrio como quien visita una atracción. Su vestuario, sus accesorios, sus cámaras, sus celulares y la seguridad con la que ocupan el espacio dejan clara la diferencia económica con quienes están siendo exhibidos.</p>
-  <div class="ph wide cam rv"><small>Turistas recorriendo el barrio</small></div>
+  <div class="ph cam rv" style="aspect-ratio:752/850;max-width:680px;margin-inline:auto"><img src="img/web/barrio.jpg" alt="Turistas fotografiando las figuras en las escaleras del barrio" loading="lazy" decoding="async"></div>
   <div class="kin" style="--s:30"><div class="kin-in">
     <div class="kl">Llegan en grupo.</div><div class="kl">Caminan con tranquilidad.</div><div class="kl">Observan.</div><div class="kl" data-f="1">Fotografían.</div><div class="kl">Se detienen frente a las figuras.</div>
   </div></div>
   <div class="split">
-    <div class="ph cam rv"><small>Turista fotografiando</small></div>
-    <div class="ph cam rv d2"><small>Turistas posando frente a una figura</small></div>
+    <div class="ph tall cam rv"><img src="img/web/turistas-norick.jpg" alt="Turistas fotografiando a Norick sobre su pedestal" style="object-position:50% 30%" loading="lazy" decoding="async"></div>
+    <div class="ph tall cam rv d2"><img src="img/web/grupo-turistas.jpg" alt="Turistas frente a Penyair, Norick, la mujer indígena y el campesino" style="object-position:50% 20%" loading="lazy" decoding="async"></div>
   </div>
   <div class="kin cam" style="--s:18"><div class="kin-in">
     <div class="kl">Miran a Penyair.</div><div class="kl">Miran a Norick.</div><div class="kl">Miran al campesino.</div><div class="kl">Miran a la mujer indígena.</div><div class="kl">Miran al hombre afrocolombiano.</div><div class="kl">Miran a la madre.</div><div class="kl">Miran al reciclador.</div><div class="kl">Miran a la persona en silla de ruedas.</div>
@@ -275,14 +284,14 @@ footer{position:relative;z-index:2;text-align:center;padding:12vh 6vw 8vh}
 <div class="hall" id="hall">
   <div class="hall-in">
     <div class="track">
-      <article class="fig"><span class="num">01</span><h3>Penyair</h3><div class="ph tall"><small>Penyair</small></div><p>Figura central de la exposición. Golpeado, herido y sangrando mientras interpreta.</p></article>
-      <article class="fig"><span class="num">02</span><h3>Norick</h3><div class="ph tall"><small>Norick</small></div><p>Figura central. Herida de bala visible en una pierna durante el día.</p></article>
-      <article class="fig"><span class="num">03</span><h3>Campesino</h3><div class="ph tall"><small>Campesino</small></div><p>Vestuario de trabajo, botas, herramientas y objetos del campo: alguien extraído de su contexto y convertido en pieza de museo.</p></article>
-      <article class="fig"><span class="num">04</span><h3>Mujer indígena</h3><div class="ph tall"><small>Mujer indígena</small></div><p>Vestuario basado en referencias culturales reales y específicas, sin mezclar símbolos de distintas comunidades. Identidad, no exotismo.</p></article>
+      <article class="fig"><span class="num">01</span><h3>Penyair</h3><div class="ph tall"><img src="img/web/penyair.jpg" alt="Penyair" style="object-position:50% 25%"></div><p>Figura central de la exposición. Golpeado, herido y sangrando mientras interpreta.</p></article>
+      <article class="fig"><span class="num">02</span><h3>Norick</h3><div class="ph tall"><img src="img/web/norick.jpg" alt="Norick" style="object-position:50% 25%"></div><p>Figura central. Herida de bala visible en una pierna durante el día.</p></article>
+      <article class="fig"><span class="num">03</span><h3>Campesino</h3><div class="ph tall"><img src="img/web/campesino.jpg" alt="Campesino con pala sobre el pedestal" style="object-position:50% 10%"></div><p>Vestuario de trabajo, botas, herramientas y objetos del campo: alguien extraído de su contexto y convertido en pieza de museo.</p></article>
+      <article class="fig"><span class="num">04</span><h3>Mujer indígena</h3><div class="ph tall"><img src="img/web/mujer-indigena.jpg" alt="Mujer indígena sobre el pedestal" style="object-position:50% 0%"></div><p>Vestuario basado en referencias culturales reales y específicas, sin mezclar símbolos de distintas comunidades. Identidad, no exotismo.</p></article>
       <article class="fig"><span class="num">05</span><h3>Hombre afrocolombiano</h3><div class="ph tall"><small>Hombre afrocolombiano</small></div><p>Presencia contemporánea y contundente, lejos de la representación folclórica; completamente integrado al presente.</p></article>
-      <article class="fig"><span class="num">06</span><h3>Madre cabeza de hogar</h3><div class="ph tall"><small>Madre cabeza de hogar</small></div><p>Vestuario cotidiano y objetos domésticos (canasta, utensilios, ropa) que luego se convierten en coreografía.</p></article>
-      <article class="fig"><span class="num">07</span><h3>Reciclador</h3><div class="ph tall"><small>Reciclador</small></div><p>Carreta, costales, cartones y plásticos como parte fundamental de su identidad visual y de su performance.</p></article>
-      <article class="fig"><span class="num">08</span><h3>Persona en silla de ruedas</h3><div class="ph tall"><small>Persona en silla de ruedas</small></div><p>La silla hace parte de la composición, pero el personaje no se construye desde la lástima: presencia activa y el mismo peso narrativo que los demás.</p></article>
+      <article class="fig"><span class="num">06</span><h3>Madre cabeza de hogar</h3><div class="ph tall"><img src="img/web/madre.jpg" alt="Madre cabeza de hogar con su hijo en brazos" style="object-position:50% 40%"></div><p>Vestuario cotidiano y objetos domésticos (canasta, utensilios, ropa) que luego se convierten en coreografía.</p></article>
+      <article class="fig"><span class="num">07</span><h3>Reciclador</h3><div class="ph tall"><img src="img/web/reciclador.jpg" alt="Reciclador con su carreta y costal" style="object-position:50% 15%"></div><p>Carreta, costales, cartones y plásticos como parte fundamental de su identidad visual y de su performance.</p></article>
+      <article class="fig"><span class="num">08</span><h3>Persona en silla de ruedas</h3><div class="ph tall"><img src="img/web/silla-de-ruedas.jpg" alt="Persona en silla de ruedas sobre el pedestal" style="object-position:50% 55%"></div><p>La silla hace parte de la composición, pero el personaje no se construye desde la lástima: presencia activa y el mismo peso narrativo que los demás.</p></article>
     </div>
     <div class="hui"><span class="hh">Recorre el museo →</span><i class="hbar"><b></b></i><span><span id="hn">01</span> / 08</span></div>
   </div>
@@ -344,10 +353,10 @@ footer{position:relative;z-index:2;text-align:center;padding:12vh 6vw 8vh}
   <h2 class="gold rv">Museo y territorio popular</h2>
   <p class="rv">La dirección de arte se construye sobre el contraste entre museo y territorio popular. No se interviene excesivamente el barrio: se aprovecha su arquitectura real para que los elementos museográficos parezcan objetos extraños instalados dentro de una comunidad.</p>
   <div class="grid">
-    <div class="card rv"><h3>Pedestales</h3><div class="ph"><small>Pedestales blancos geométricos</small></div><p>Grandes, blancos, geométricos y minimalistas; apariencia limpia, contemporánea, casi institucional. Algunos bajos y otros muy altos para jugar con las escalas.</p></div>
-    <div class="card rv d1"><h3>El barrio como museo</h3><div class="ph"><small>Terrazas, escaleras y fachadas reales</small></div><p>Terrazas, escaleras, fachadas, ventanas, cables, ropa tendida y puertas permanecen visibles. Los pedestales son prácticamente lo único artificial.</p></div>
-    <div class="card rv d2"><h3>Los turistas</h3><div class="ph"><small>Vestuario y accesorios de alto nivel</small></div><p>Prendas costosas, relojes, gafas, cámaras profesionales, celulares de alta gama y bolsos de viaje. No villanos caricaturescos: una clase que entra, consume la experiencia y se va.</p></div>
-    <div class="card rv"><h3>Color y fotografía</h3><div class="ph"><small>Paleta realista y desaturada</small></div><p>Estética realista, paleta controlada y ligeramente desaturada. Las heridas destacan de forma natural, sin caer en lo gore. Más contraste y fuerza durante los performances.</p></div>
+    <div class="card rv"><h3>Pedestales</h3><div class="ph tall"><img src="img/web/mujer-indigena.jpg" alt="Pedestal blanco geométrico en el barrio" style="object-position:50% 85%" loading="lazy" decoding="async"></div><p>Grandes, blancos, geométricos y minimalistas; apariencia limpia, contemporánea, casi institucional. Algunos bajos y otros muy altos para jugar con las escalas.</p></div>
+    <div class="card rv d1"><h3>El barrio como museo</h3><div class="ph tall"><img src="img/web/barrio.jpg" alt="Terrazas, escaleras y fachadas reales del barrio" loading="lazy" decoding="async"></div><p>Terrazas, escaleras, fachadas, ventanas, cables, ropa tendida y puertas permanecen visibles. Los pedestales son prácticamente lo único artificial.</p></div>
+    <div class="card rv d2"><h3>Los turistas</h3><div class="ph tall"><img src="img/web/grupo-turistas.jpg" alt="Turistas con vestuario y accesorios de alto nivel" style="object-position:50% 100%" loading="lazy" decoding="async"></div><p>Prendas costosas, relojes, gafas, cámaras profesionales, celulares de alta gama y bolsos de viaje. No villanos caricaturescos: una clase que entra, consume la experiencia y se va.</p></div>
+    <div class="card rv"><h3>Color y fotografía</h3><div class="ph tall"><img src="img/web/set-horizontal.jpg" alt="Equipo de cámara e iluminación durante el rodaje" loading="lazy" decoding="async"></div><p>Estética realista, paleta controlada y ligeramente desaturada. Las heridas destacan de forma natural, sin caer en lo gore. Más contraste y fuerza durante los performances.</p></div>
   </div>
 </section>
 
@@ -388,7 +397,14 @@ const secs=$$('section'),dots=secs.map(s=>{const a=document.createElement('a');a
 const bar=$('#bar'),head=$('header'),hc=$('.hc'),night=$('#night'),fin=$('#final'),flashEl=$('#flash');
 const hall=$('#hall'),track=$('.track'),figs=$$('.fig'),hn=$('#hn');
 const kins=$$('.kin').map(k=>({k,in:k.firstElementChild,l:[...k.querySelectorAll('.kl')],i:-2}));
+$$('.ph').forEach(p=>p.querySelector('img,video')&&p.classList.add('has'));
 const k3=$('#k3'),allPh=$$('.ph'),par=allPh.filter(p=>!p.closest('.track'));
+
+// video en bucle: se descarga y reproduce solo cuando está cerca de la pantalla
+if(!still){
+  const vio=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting){if(!v.src)v.src=v.dataset.src;v.play().catch(()=>{})}else v.pause()}),{rootMargin:'300px'});
+  $$('video[data-src]').forEach(v=>vio.observe(v));
+}
 let tops=[],cx=[],dist=0,endK3=0,finTop=0,NA=-1,M=-1,hide=false,lf=0,lw=0,lh=0;
 
 // flash de pantalla completa (máx. uno por segundo)
