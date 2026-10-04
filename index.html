@@ -6,7 +6,7 @@
 <title>El museo de los otros</title>
 <script>if(!matchMedia('(prefers-reduced-motion:reduce)').matches)document.documentElement.classList.remove('static')</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 :root{--fh:"Outfit","Montserrat",sans-serif;--gold:#d4af37;--gold-l:#f3dc8a;--gold-d:#8a6d1a;--white:#f5f1e6;--bg:#000;--m:1}
 .static{--m:0} /* --m: 1 = museo (marco, pedestal) · 0 = territorio (libre) */
@@ -37,12 +37,12 @@ header.hide{transform:translateY(-110%)}
 
 section{position:relative;z-index:2;padding:14vh 6vw;max-width:1200px;margin:0 auto}
 .full{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;max-width:none}
-h1,h2,h3{font-family:var(--fh);font-weight:600;letter-spacing:-.01em;line-height:1.1}
-h1{font-size:clamp(2.2rem,7.5vw,6rem);letter-spacing:.02em;text-transform:uppercase}
+h1,h2,h3{font-family:var(--fh);font-weight:800;letter-spacing:-.02em;line-height:1.1}
+h1{font-size:clamp(2.2rem,7.5vw,6rem);letter-spacing:-.01em;text-transform:uppercase}
 h2{font-size:clamp(2rem,5.5vw,4rem);margin-bottom:.6em}
 h2::after{content:"";display:block;height:1px;width:0;margin-top:.3em;background:linear-gradient(90deg,var(--gold),transparent);transition:width 1.6s .4s cubic-bezier(.2,.7,.2,1)}
 h2.in::after,.static h2::after{width:min(240px,45%)}
-h3{font-size:1.6rem;color:var(--gold-l);margin-bottom:.3em}
+h3{font-weight:700;font-size:1.6rem;color:var(--gold-l);margin-bottom:.3em}
 .gold{background:linear-gradient(110deg,var(--gold-d) 10%,var(--gold-l) 40%,var(--gold) 55%,var(--gold-d) 90%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}
 @keyframes shine{to{background-position:-250% 0}}
 .eyebrow{font-size:.75rem;letter-spacing:.5em;text-transform:uppercase;color:var(--gold);margin-bottom:1.6em}
@@ -50,7 +50,7 @@ h3{font-size:1.6rem;color:var(--gold-l);margin-bottom:.3em}
 @keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 p{margin-bottom:1.4em;font-size:1.05rem;max-width:62ch}
 p b{color:var(--gold-l);font-weight:600}
-.big{font-family:var(--fh);font-size:clamp(1.5rem,3.6vw,2.5rem);font-weight:500;line-height:1.3;max-width:26ch;margin:0 auto;text-align:center}
+.big{font-family:var(--fh);font-size:clamp(1.5rem,3.6vw,2.5rem);font-weight:600;line-height:1.3;max-width:26ch;margin:0 auto;text-align:center}
 hr{border:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto;max-width:600px;position:relative;z-index:2}
 
 /* portada: foco de museo, polvo dorado y parallax */
@@ -83,7 +83,7 @@ hr{border:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),
 
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin:4rem 0 1rem;text-align:center}
 @media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
-.stats b{display:block;font:600 clamp(2.6rem,7vw,4.5rem)/1 var(--fh)}
+.stats b{display:block;font:800 clamp(2.6rem,7vw,4.5rem)/1 var(--fh)}
 .stats span{font-size:.7rem;letter-spacing:.35em;text-transform:uppercase;opacity:.7}
 
 /* visor y flash de cámara */
@@ -108,7 +108,7 @@ hr{border:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),
 /* texto cinético: las frases cortas se encienden una a una al hacer scroll */
 .kin{height:calc(100vh + var(--n,5)*var(--s,28)*1vh);margin:2rem 0}
 .kin-in{position:sticky;top:0;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:.15em}
-.kl{position:relative;display:inline-block;font:600 clamp(1.6rem,5.6vw,3.8rem)/1.2 var(--fh);color:var(--white);opacity:.14;transform:translateY(14px) scale(.96);filter:blur(1.5px);transition:opacity .7s,transform .7s cubic-bezier(.2,.7,.2,1),filter .7s,color .7s}
+.kl{position:relative;display:inline-block;font:700 clamp(1.6rem,5.6vw,3.8rem)/1.2 var(--fh);color:var(--white);opacity:.14;transform:translateY(14px) scale(.96);filter:blur(1.5px);transition:opacity .7s,transform .7s cubic-bezier(.2,.7,.2,1),filter .7s,color .7s}
 .kl.past{opacity:.4;transform:none;filter:none}
 .kl.act{opacity:1;transform:none;filter:none;color:var(--gold-l)}
 .kin.mv .kl{transform:translateX(-70px)}
